@@ -1,0 +1,1 @@
+# Các hàm tiện ích như tính khoảng cách
