@@ -1,1 +1,7 @@
-# Liệt kê các thư viện cần thiết
+PyQt6
+matplotlib
+qasync
+qtinter
+numpy
+pyqtgraph
+networkx
