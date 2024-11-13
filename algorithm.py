@@ -31,6 +31,8 @@ class GreedyTSP():
         self.matrix = create_distance_matrix(num_cities)  # Tạo ma trận khoảng cách chỉ một lần
         self.result = None
         self.path = []  # Đường đi theo thứ tự các thành phố
+        self.total_distance = 0  # Tổng độ dài của hành trình
+        self.steps = 0  # Số bước thực hiện
 
     def create_plot(self):
         # Vẽ tất cả các thành phố và khoảng cách giữa các thành phố
@@ -75,12 +77,13 @@ class GreedyTSP():
             self.path.append(nearest_city)
             unvisited.remove(nearest_city)
             current_city = nearest_city
+            self.steps += 1  # Tăng số bước mỗi lần chọn thành phố
 
         # Tính tổng độ dài quãng đường
-        total_distance = routeLength(self.matrix, self.path)
+        self.total_distance = routeLength(self.matrix, self.path)
         
         # Lưu kết quả vào self.result
-        self.result = f"Đường đi theo Greedy: {self.path}\nTổng độ dài: {total_distance}\n"
+        self.result = f"Đường đi theo Greedy: {self.path}\nTổng độ dài: {self.total_distance}\nSố bước thực hiện: {self.steps}\n"
         return self.path
 
 # Hàm main để chạy GreedyTSP và kiểm tra kết quả

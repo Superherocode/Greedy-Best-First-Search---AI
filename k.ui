@@ -6,97 +6,197 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>900</width>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>Traveling Salesman Problem - Visualization</string>
   </property>
   <widget class="QWidget" name="centralwidget">
+   <!-- Redesigned Layout -->
    <widget class="QLabel" name="label">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>400</y>
-      <width>201</width>
-      <height>16</height>
+      <x>20</x>
+      <y>430</y>
+      <width>180</width>
+      <height>30</height>
      </rect>
     </property>
     <property name="text">
      <string>Nhập số thành phố:</string>
     </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   
+   <widget class="QSpinBox" name="spinBox">
     <property name="geometry">
      <rect>
-      <x>260</x>
-      <y>400</y>
-      <width>49</width>
-      <height>16</height>
+      <x>200</x>
+      <y>430</y>
+      <width>100</width>
+      <height>30</height>
      </rect>
     </property>
-    <property name="text">
-     <string>Kết quả:</string>
+    <property name="minimum">
+     <number>2</number>
+    </property>
+    <property name="maximum">
+     <number>100</number>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+     </font>
     </property>
    </widget>
-   <widget class="QTextBrowser" name="tbResult">
-    <property name="geometry">
-     <rect>
-      <x>260</x>
-      <y>421</y>
-      <width>531</width>
-      <height>131</height>
-     </rect>
-    </property>
-   </widget>
+
    <widget class="QPushButton" name="btStart">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>480</y>
-      <width>75</width>
-      <height>51</height>
+      <x>320</x>
+      <y>420</y>
+      <width>100</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
      <string>Bắt đầu</string>
     </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string>background-color: #4CAF50; color: white; border-radius: 10px;</string>
+    </property>
    </widget>
+
    <widget class="QPushButton" name="btStop">
     <property name="geometry">
      <rect>
-      <x>130</x>
-      <y>480</y>
-      <width>75</width>
-      <height>51</height>
+      <x>440</x>
+      <y>420</y>
+      <width>100</width>
+      <height>40</height>
      </rect>
     </property>
     <property name="text">
      <string>Dừng lại</string>
     </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string>background-color: #f44336; color: white; border-radius: 10px;</string>
+    </property>
    </widget>
+
+   <widget class="QProgressBar" name="progressBar">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>470</y>
+      <width>840</width>
+      <height>25</height>
+     </rect>
+    </property>
+    <property name="value">
+     <number>0</number>
+    </property>
+    <property name="textVisible">
+     <bool>true</bool>
+    </property>
+   </widget>
+
+   <widget class="QLabel" name="label_status">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>500</y>
+      <width>200</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Trạng thái: Đang chờ...</string>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <italic>true</italic>
+     </font>
+    </property>
+   </widget>
+
+   <widget class="QLabel" name="label_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>530</y>
+      <width>100</width>
+      <height>30</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Kết quả:</string>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>12</pointsize>
+      <bold>true</bold>
+     </font>
+    </property>
+   </widget>
+
+   <widget class="QTextBrowser" name="tbResult">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>560</y>
+      <width>840</width>
+      <height>60</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Arial</family>
+      <pointsize>11</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string>border: 1px solid #ccc; padding: 10px; border-radius: 5px;</string>
+    </property>
+   </widget>
+
    <widget class="MplWidget" name="canvaFrame" native="true">
     <property name="geometry">
      <rect>
-      <x>10</x>
-      <y>10</y>
-      <width>781</width>
-      <height>381</height>
+      <x>20</x>
+      <y>20</y>
+      <width>860</width>
+      <height>380</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QSpinBox" name="spinBox">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>430</y>
-      <width>191</width>
-      <height>22</height>
-     </rect>
-    </property>
-    <property name="minimum">
-     <number>2</number>
+    <property name="styleSheet">
+     <string>border: 2px solid #ccc; border-radius: 10px;</string>
     </property>
    </widget>
   </widget>
@@ -105,8 +205,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
-     <height>22</height>
+     <width>900</width>
+     <height>25</height>
     </rect>
    </property>
   </widget>
