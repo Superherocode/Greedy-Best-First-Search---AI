@@ -2,7 +2,7 @@
 
 import sys
 from typing import Optional
-from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QDialog, QVBoxLayout, QLabel
+from PyQt6.QtWidgets import QApplication, QWidget, QMainWindow, QDialog, QVBoxLayout, QLabel, QFileDialog
 import PyQt6.QtWidgets as QtWidgets
 from ui import Ui_MainWindow
 from algorithm import GreedyTSP  # Sử dụng GreedyTSP thay vì Hill Climbing
@@ -15,6 +15,7 @@ import numpy as np
 from decimal import Decimal
 import matplotlib.pyplot as plt
 import time
+import csv
 
 class AlertDialog(QDialog):
     def __init__(self, message):
@@ -39,6 +40,18 @@ class Core(QMainWindow, Ui_MainWindow):
         self.ui.setupUi(self)
         self.ui.btStart.clicked.connect(self.start)
         self.ui.btStop.clicked.connect(self.stop)
+        self.ui.btSave = QtWidgets.QPushButton(self.ui.centralwidget)
+        self.ui.btSave.setGeometry(550, 420, 100, 40)
+        self.ui.btSave.setText("Lưu kết quả")
+        self.ui.btSave.setStyleSheet("background-color: #2196F3; color: white; border-radius: 10px;")
+        self.ui.btSave.clicked.connect(self.save_result)
+
+        self.ui.btLoad = QtWidgets.QPushButton(self.ui.centralwidget)
+        self.ui.btLoad.setGeometry(670, 420, 100, 40)
+        self.ui.btLoad.setText("Tải kết quả")
+        self.ui.btLoad.setStyleSheet("background-color: #FF9800; color: white; border-radius: 10px;")
+        self.ui.btLoad.clicked.connect(self.load_result)
+
         self.task = None
         self.ui.progressBar.setValue(0)
         self.timer = QTimer()
@@ -85,6 +98,30 @@ class Core(QMainWindow, Ui_MainWindow):
             self.ui.label_status.setText("Trạng thái: Đã dừng")
             self.ui.progressBar.setValue(0)
             self.timer.stop()
+
+    def save_result(self):
+        file_name, _ = QFileDialog.getSaveFileName(self, "Lưu kết quả", "", "CSV Files (*.csv);;All Files (*)")
+        if file_name:
+            with open(file_name, mode='w', newline='') as file:
+                writer = csv.writer(file)
+                writer.writerow(["Path", "Total Distance", "Steps", "Elapsed Time"])
+                tsp_result = self.ui.tbResult.toPlainText().splitlines()
+                if len(tsp_result) >= 4:
+                    path_info = tsp_result[0].split(': ')[1] if len(tsp_result[0].split(': ')) > 1 else ""
+                    total_distance = tsp_result[1].split(': ')[1] if len(tsp_result[1].split(': ')) > 1 else ""
+                    steps = tsp_result[2].split(': ')[1] if len(tsp_result[2].split(': ')) > 1 else ""
+                    elapsed_time = tsp_result[3].split(': ')[1] if len(tsp_result[3].split(': ')) > 1 else ""
+                    writer.writerow([path_info, total_distance, steps, elapsed_time])
+
+    def load_result(self):
+        file_name, _ = QFileDialog.getOpenFileName(self, "Tải kết quả", "", "CSV Files (*.csv);;All Files (*)")
+        if file_name:
+            with open(file_name, mode='r') as file:
+                reader = csv.reader(file)
+                next(reader)  # Bỏ qua tiêu đề
+                for row in reader:
+                    path_info, total_distance, steps, elapsed_time = row
+                    self.ui.tbResult.setText(f"Đường đi: {path_info}\nTổng độ dài: {total_distance}\nSố bước: {steps}\nThời gian chạy: {elapsed_time}")
 
     def update_progress(self):
         current_value = self.ui.progressBar.value()
